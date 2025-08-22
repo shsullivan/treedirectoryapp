@@ -55,12 +55,15 @@ public class TreeDirectoryApp {
                         directoryGenerator(rootPath, 0);
                     }
                     catch (IOException e) {
-                        System.out.println("Error: " + e.getMessage());
+                        System.out.println("Error: " + e.getMessage() + "is not a valid path");
                     }
                     break;
                 case "2":
                     run = false;
                     System.out.println("Thanks for using the Directory Visualizer");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
                     break;
             }
         }
