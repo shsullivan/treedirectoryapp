@@ -1,12 +1,10 @@
 package com.sullivan.DirectoryVisualizer;
 
 import java.io.IOException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class TreeDirectoryApp {
 
@@ -16,15 +14,15 @@ public class TreeDirectoryApp {
 
         if(attrs.isDirectory()) {
             DirectoryStream<Path> stream = Files.newDirectoryStream(path);
-            System.out.println(depthVisual(depth) + ">" + path.getFileName() + " (File Size: " +  Files.size(path)
-                                + " bytes)");
+            System.out.println(depthVisual(depth) + ">" + path.getFileName() + " | " +
+                                calcDirectorySize(path) + " bytes");
 
             for(Path child : stream) {
                 directoryGenerator(child, depth + 1);
             }
         }
         else {
-            System.out.println(depthVisual(depth) + "|--" + path.getFileName() + " " + Files.size(path));
+            System.out.println(depthVisual(depth) + "|-- " + path.getFileName() + " | " + Files.size(path) + " bytes");
         }
     }
 
@@ -34,6 +32,22 @@ public class TreeDirectoryApp {
             sb.append("\t");
         }
         return sb.toString();
+    }
+
+    public static long calcDirectorySize(Path path) throws IOException {
+        try (Stream<Path> walk = Files.walk(path)) {
+            return walk
+                    .filter(p -> Files.isRegularFile(p, LinkOption.NOFOLLOW_LINKS))
+                    .mapToLong(p -> {
+                        try {
+                            return Files.size(p);
+                        }
+                        catch (IOException e) {
+                            return 0L;
+                        }
+                    })
+                    .sum();
+        }
     }
 
     public static void main(String[] args) {
