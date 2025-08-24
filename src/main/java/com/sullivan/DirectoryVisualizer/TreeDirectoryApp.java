@@ -16,14 +16,15 @@ public class TreeDirectoryApp {
 
         if(attrs.isDirectory()) {
             DirectoryStream<Path> stream = Files.newDirectoryStream(path);
-            System.out.println(depthVisual(depth) + ">" + path.getFileName());
+            System.out.println(depthVisual(depth) + ">" + path.getFileName() + " (File Size: " +  Files.size(path)
+                                + " bytes)");
 
             for(Path child : stream) {
                 directoryGenerator(child, depth + 1);
             }
         }
         else {
-            System.out.println(depthVisual(depth) + "|--" + path.getFileName());
+            System.out.println(depthVisual(depth) + "|--" + path.getFileName() + " " + Files.size(path));
         }
     }
 
