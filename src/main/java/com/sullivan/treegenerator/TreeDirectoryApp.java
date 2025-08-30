@@ -4,10 +4,7 @@ import com.sullivan.treegenerator.model.DirectoryNode;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Scanner;
-import java.util.stream.Stream;
 
 public class TreeDirectoryApp {
 
