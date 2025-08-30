@@ -12,20 +12,44 @@ import java.util.stream.Stream;
 public class TreeDirectoryApp {
 
     public static DirectoryNode treeGenerator(File directory) throws IOException {
+
         DirectoryNode node = new DirectoryNode(directory.getName(), directory.isDirectory());
+
         if (directory.isDirectory()) {
             File[] files = directory.listFiles();
             if (files != null) {
                 for (File file : files) {
-                    node.getChildren().add(treeGenerator(file));
-                }
+                    DirectoryNode child = treeGenerator(file);
+                    node.getChildren().add(child);
+                    node.setFileCount(node.getFileCount() + child.getFileCount());
+                    node.setTotalSize(node.getTotalSize() + child.getTotalSize());
+                    }
             }
+        }
+        else {
+            node.setFileCount(1);
+            node.setTotalSize(directory.length());
         }
         return node;
     }
 
+    private static String byteSize(long bytes) {
+        if (bytes < 1024) {
+            return bytes + " B";
+        }
+        int exp = (int) (Math.log(bytes) / Math.log(1024));
+        String unit = "KMGTPE".charAt(exp - 1) + "B";
+        return String.format("%.1f %s", bytes / Math.pow(1024, exp), unit);
+    }
+
     public static void printTree(DirectoryNode node, int depth) {
-        System.out.println("  ".repeat(depth) + (node.isDirectory() ? ">" : "|--") + node.getFileName());
+        System.out.println(
+            "  ".repeat(depth) +
+            (node.isDirectory() ?
+                ">"+ node.getFileName() + " (" + node.getFileCount() + " files " + byteSize(node.getTotalSize()) + ")" :
+                "|--" + node.getFileName() + " " + byteSize(node.getTotalSize())
+            )
+        );
         for (DirectoryNode child : node.getChildren()) {
             printTree(child, depth + 1);
         }

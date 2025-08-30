@@ -9,6 +9,8 @@ public class DirectoryNode {
     private String fileName;
     private boolean isDirectory;
     private List<DirectoryNode> children =  new ArrayList<>();
+    private int fileCount;
+    private long totalSize;
 
     // Constructor
     public DirectoryNode(String fileName, boolean isDirectory) {
@@ -35,5 +37,17 @@ public class DirectoryNode {
     }
     public void setChildren(List<DirectoryNode> children) {
         this.children = children;
+    }
+    public int getFileCount() {
+        return fileCount;
+    }
+    public void setFileCount(int fileCount) {
+        this.fileCount = fileCount;
+    }
+    public long getTotalSize() {
+        return totalSize;
+    }
+    public void setTotalSize(long totalSize) {
+        this.totalSize = totalSize;
     }
 }
