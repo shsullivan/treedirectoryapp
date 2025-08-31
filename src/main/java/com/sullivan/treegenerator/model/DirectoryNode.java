@@ -3,6 +3,15 @@ package com.sullivan.treegenerator.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <h1>DirectoryNode</h1>
+ * @author Shawn Sullivan
+ * CEN 4025C - 14148 <br>
+ * August 30, 2025 <br>
+ * DirectoryNode is the base class for the Tree Directory App. The DirectoryNode object acts as the root for each level
+ * of the directory tree structure
+ */
+
 public class DirectoryNode {
 
     // Attributes
@@ -12,7 +21,22 @@ public class DirectoryNode {
     private int fileCount;
     private long totalSize;
 
-    // Constructor
+    /**
+     * Default constructor (for invocation by subclass constructors, typically implicit.)
+     */
+    public DirectoryNode(String fileName, boolean isDirectory, int fileCount, long totalSize) {
+        this.fileName = fileName;
+        this.isDirectory = isDirectory;
+        this.fileCount = fileCount;
+        this.totalSize = totalSize;
+    }
+
+    /**
+     * Instantiates a DirectoryNode based on fileName and isDirectory provided. All other values are null
+     * @param fileName String generated File.getName() and stored for display in tree directory
+     * @param isDirectory boolean generated from File.isDirectory() and used in tree directory storage logic
+     */
+    // Custom Constructor
     public DirectoryNode(String fileName, boolean isDirectory) {
         this.fileName = fileName;
         this.isDirectory = isDirectory;
