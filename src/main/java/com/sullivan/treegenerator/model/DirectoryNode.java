@@ -36,7 +36,6 @@ public class DirectoryNode {
      * @param fileName String generated File.getName() and stored for display in tree directory
      * @param isDirectory boolean generated from File.isDirectory() and used in tree directory storage logic
      */
-    // Custom Constructor
     public DirectoryNode(String fileName, boolean isDirectory) {
         this.fileName = fileName;
         this.isDirectory = isDirectory;
